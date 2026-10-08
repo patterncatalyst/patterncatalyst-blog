@@ -13,6 +13,9 @@ brand_emoji: "✍️"   # Single emoji that appears next to the title in the hea
 github_username: "patterncatalyst"
 github_repo: "patterncatalyst-blog"
 
+# The hub/index site this blog belongs to (header/footer/home "hub" links)
+hub_url: "https://patterncatalyst.github.io/patterncatalyst-workshops-tutorials-list/"
+
 # baseurl
 # - On user/org Pages site (USERNAME.github.io): set to ""
 # - On project Pages site (USERNAME.github.io/PROJECT): set to "/PROJECT"
