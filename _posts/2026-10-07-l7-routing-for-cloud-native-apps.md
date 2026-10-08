@@ -17,9 +17,11 @@ envelope crossing the network — both north/south (clients into the system) and
 (service to service). Most of those decisions, the ones that actually move the needle on
 reliability and velocity, happen east/west, not at the edge.
 
-This post walks what each layer can see and decide, shows real config for the mesh, covers
-TLS, sticky sessions, and traffic steering, goes inside the service for rule-driven routing,
-and ends where most of the decisions actually live: east/west.
+Each layer — edge, gateway, mesh, and the application itself — can see and decide different
+things, and most of the interesting work happens deeper than teams expect. What follows is
+the decision chain layer by layer: what the mesh can do with TLS, sticky sessions, and
+traffic steering; what only the service itself can decide with rule-driven routing; and why
+east/west is where most of it lives.
 
 ## L4 versus L7 — what each layer can decide on
 
