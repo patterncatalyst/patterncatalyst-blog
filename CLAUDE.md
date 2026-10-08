@@ -12,8 +12,10 @@ hub's "Our Blogs" page links to posts here. Live at
 
 ## How it's built
 
-Extends the `lgtm-jekyll` house template (Red Hat fonts, amber accent
-`#e8870c`, shared `assets/css/site.css`) with a blog layer:
+The reusable recipe for this whole setup is the **"Blog mode"** section of the
+`lgtm-jekyll` skill; this repo is its reference implementation. Extends the
+`lgtm-jekyll` house template (Red Hat fonts, amber accent `#e8870c`, shared
+`assets/css/site.css`) with a blog layer:
 
 - `_posts/` collection with dated permalinks (`/:year/:month/:day/:title/`).
 - `jekyll-paginate-v2` for pagination and auto tag/category index pages. This
