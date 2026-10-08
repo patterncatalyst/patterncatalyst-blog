@@ -25,6 +25,33 @@ Extends the `lgtm-jekyll` house template (Red Hat fonts, amber accent
 - Post listings render as a **table** via `_includes/post_table.html` (home +
   tag/category pages). Keep listings tabular, not card grids.
 
+## Post layout and design reference
+
+Single posts use an **essay / blog layout**, not the book/doc layout. The look
+to preserve is a clean, minimal, readable article in the spirit of the
+"Beautiful Jekyll" essay style, for example
+<https://vladikk.com/2026/03/30/solid-principles-ai-era/> — the comfortable
+measure and calm typography, but in our house style (Red Hat fonts, amber
+accent) and **no AI/stock hero art** (hero images are optional and off by
+default).
+
+It lives in `_layouts/post.html` plus the `.post-article*` block at the bottom
+of `assets/css/site.css`. Keep these properties when editing:
+
+- Single centered column, reading measure **~46rem (~736px)**; no breadcrumb and
+  no sidebar.
+- Header: a small category **kicker**, a large **title**, then a clean byline
+  (`Month D, YYYY · N min read · author`; reading time is computed from the word
+  count). Tag chips under the byline.
+- Body type **~1.15rem / 1.8 line-height**, with a slightly larger **lead
+  paragraph**. Do **not** reintroduce the book "section accent bar"
+  (`h2::before`) or the mono breadcrumb from the `.tutorial` layout.
+- The content body keeps the shared `.tutorial__body` class so code blocks,
+  figures, callouts, and tables stay styled; `.post-article__body` only changes
+  the essay feel.
+- Footer: prev/next pager. The "source project" credit stays at the end of the
+  post body itself.
+
 ## How to add a post
 
 Create `_posts/YYYY-MM-DD-slug.md` with this front matter:
