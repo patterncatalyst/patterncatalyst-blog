@@ -1,0 +1,28 @@
+{%- comment -%}
+  post_card.html — one .card for a post, used by the home page grid and the
+  tag/category autopages.
+
+  Usage:
+      {% include post_card.html post=post %}
+
+  Required: post (a Jekyll post/document object)
+{%- endcomment -%}
+
+{%- assign post = include.post -%}
+<a class="card" href="{{ post.url | relative_url }}">
+  <div class="card__eyebrow">
+    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+    {%- if post.categories.size > 0 -%}
+      <span aria-hidden="true"> · </span><strong>{{ post.categories | first }}</strong>
+    {%- endif -%}
+  </div>
+  <h3 class="card__title">{{ post.title }}</h3>
+  {%- if post.excerpt -%}
+    <p class="card__desc">{{ post.excerpt | strip_html | truncate: 160 }}</p>
+  {%- endif -%}
+  <div class="card__meta">
+    {%- for tag in post.tags limit: 3 -%}
+      <span class="chip">{{ tag }}</span>
+    {%- endfor -%}
+  </div>
+</a>

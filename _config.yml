@@ -1,0 +1,78 @@
+# ────────────────────────────────────────────────────────────────────────────
+# Project: patterncatalyst-blog
+# Site identity, GitHub link target, and baseurl. Build configuration below
+# generally doesn't need changes.
+# ────────────────────────────────────────────────────────────────────────────
+
+# Site identity
+title: "Pattern Catalyst Blog"
+description: "Field notes mined from our workshops, tutorials, and reference builds."
+brand_emoji: "✍️"   # Single emoji that appears next to the title in the header
+
+# GitHub identity for header link and example sourcing
+github_username: "patterncatalyst"
+github_repo: "patterncatalyst-blog"
+
+# baseurl
+# - On user/org Pages site (USERNAME.github.io): set to ""
+# - On project Pages site (USERNAME.github.io/PROJECT): set to "/PROJECT"
+# - For local dev override at runtime: bundle exec jekyll serve --baseurl ""
+baseurl: "/patterncatalyst-blog"
+
+url: "https://patterncatalyst.github.io"
+
+license: "Apache 2.0"
+
+# ────────────────────────────────────────────────────────────────────────────
+# Build configuration — generally don't change these.
+# ────────────────────────────────────────────────────────────────────────────
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+permalink: /:year/:month/:day/:title/
+
+# Default front-matter for posts — saves typing `layout: post` on every post.
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+# jekyll-paginate-v2 — home page pagination
+pagination:
+  enabled: true
+  per_page: 9
+  permalink: '/page/:num/'
+  sort_field: 'date'
+  sort_reverse: true
+
+# jekyll-paginate-v2 autopages — tag & category index pages
+autopages:
+  enabled: true
+  tags:
+    enabled: true
+    layouts:
+      - 'post_list.html'
+    title: 'Posts tagged :tag'
+    permalink: '/tag/:tag/'
+  categories:
+    enabled: true
+    layouts:
+      - 'post_list.html'
+    title: 'Posts in :cat'
+    permalink: '/category/:cat/'
+  collections:
+    enabled: false
+
+# Files that Jekyll should not process or include in the built site.
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - node_modules/
+  - README.md
+  - LICENSE

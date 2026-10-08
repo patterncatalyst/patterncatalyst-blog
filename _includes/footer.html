@@ -1,0 +1,30 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>{{ site.title | default: "Blog" }}</h4>
+        <p>{{ site.description | default: "A technical blog." }}</p>
+      </div>
+      <div class="footer-col">
+        <h4>Browse</h4>
+        <ul>
+          <li><a href="{{ '/' | relative_url }}">Latest posts</a></li>
+          <li><a href="{{ '/tag/cloud-native/' | relative_url }}">Tags</a></li>
+          <li><a href="{{ '/feed.xml' | relative_url }}">RSS feed</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Reference</h4>
+        <ul>
+          <li><a href="https://patterncatalyst.github.io/cloud-native-design-patterns/" rel="noopener">Cloud-Native Design Patterns ↗</a></li>
+          <li><a href="https://github.com/{{ site.github_username }}/{{ site.github_repo }}" rel="noopener">View on GitHub ↗</a></li>
+          <li><a href="https://github.com/{{ site.github_username }}/{{ site.github_repo }}/issues" rel="noopener">Issues ↗</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <span>Open source · {{ site.license | default: "Apache 2.0" }}</span>
+      <span>Last built {{ site.time | date: "%Y-%m-%d" }}</span>
+    </div>
+  </div>
+</footer>

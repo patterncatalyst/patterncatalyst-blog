@@ -1,0 +1,56 @@
+---
+layout: default
+---
+
+{%- comment -%}
+  post_list.html — paginated .cards grid, used for:
+    - the jekyll-paginate-v2 tag autopages   (/tag/:tag/)
+    - the jekyll-paginate-v2 category autopages (/category/:cat/)
+
+  jekyll-paginate-v2 injects `paginator` with the filtered post list for the
+  current tag/category page, same shape as the home page's paginator.
+{%- endcomment -%}
+
+<section class="section">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ '/' | relative_url }}">Home</a>
+      <span class="breadcrumb__sep">/</span>
+      <span class="breadcrumb__current">{{ page.title }}</span>
+    </nav>
+
+    <h1 class="section-heading">{{ page.title }}</h1>
+
+    {%- if paginator.posts.size > 0 -%}
+    <div class="cards">
+      {%- for post in paginator.posts -%}
+        {% include post_card.html post=post %}
+      {%- endfor -%}
+    </div>
+    {%- else -%}
+    <p class="section-sub">No posts here yet.</p>
+    {%- endif -%}
+
+    {%- if paginator.total_pages > 1 -%}
+    <nav class="pager" aria-label="Post pagination">
+      {%- if paginator.previous_page -%}
+        <a class="pager__link pager__link--prev" href="{{ paginator.previous_page_path | relative_url }}">
+          <span class="pager__dir">← Newer</span>
+          <span class="pager__title">Page {{ paginator.previous_page }}</span>
+        </a>
+      {%- else -%}
+        <span></span>
+      {%- endif -%}
+
+      {%- if paginator.next_page -%}
+        <a class="pager__link pager__link--next" href="{{ paginator.next_page_path | relative_url }}">
+          <span class="pager__dir">Older →</span>
+          <span class="pager__title">Page {{ paginator.next_page }}</span>
+        </a>
+      {%- else -%}
+        <span></span>
+      {%- endif -%}
+    </nav>
+    {%- endif -%}
+  </div>
+</section>

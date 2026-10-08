@@ -1,0 +1,63 @@
+---
+layout: default
+title: Home
+pagination:
+  enabled: true
+---
+
+<section class="hero">
+  <div class="container">
+    <span class="hero__eyebrow">Workshops · Tutorials · Reference builds</span>
+    <h1 class="hero__title">{{ site.title }}</h1>
+    <p class="hero__lead">{{ site.description }}</p>
+    <div class="hero__cta">
+      <a class="btn btn--primary" href="{{ '/tag/cloud-native/' | relative_url }}">Browse by tag →</a>
+      <a class="btn btn--secondary" href="{{ '/feed.xml' | relative_url }}">Subscribe (RSS)</a>
+      <a class="btn btn--secondary"
+         href="https://patterncatalyst.github.io/cloud-native-design-patterns/"
+         rel="noopener">Visit the hub ↗</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="section-heading">Latest posts</h2>
+    <p class="section-sub">
+      Field notes mined from the workshops and reference builds — the stories
+      that don't fit in a chapter footer.
+    </p>
+
+    {%- if paginator.posts.size > 0 -%}
+    <div class="cards">
+      {%- for post in paginator.posts -%}
+        {% include post_card.html post=post %}
+      {%- endfor -%}
+    </div>
+    {%- else -%}
+    <p class="section-sub">No posts yet — check back soon.</p>
+    {%- endif -%}
+
+    {%- if paginator.total_pages > 1 -%}
+    <nav class="pager" aria-label="Post pagination">
+      {%- if paginator.previous_page -%}
+        <a class="pager__link pager__link--prev" href="{{ paginator.previous_page_path | relative_url }}">
+          <span class="pager__dir">← Newer</span>
+          <span class="pager__title">Page {{ paginator.previous_page }}</span>
+        </a>
+      {%- else -%}
+        <span></span>
+      {%- endif -%}
+
+      {%- if paginator.next_page -%}
+        <a class="pager__link pager__link--next" href="{{ paginator.next_page_path | relative_url }}">
+          <span class="pager__dir">Older →</span>
+          <span class="pager__title">Page {{ paginator.next_page }}</span>
+        </a>
+      {%- else -%}
+        <span></span>
+      {%- endif -%}
+    </nav>
+    {%- endif -%}
+  </div>
+</section>
