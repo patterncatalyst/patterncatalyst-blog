@@ -79,3 +79,4 @@ exclude:
   - node_modules/
   - README.md
   - LICENSE
+  - CLAUDE.md
