@@ -3,10 +3,10 @@ layout: default
 ---
 
 {%- comment -%}
-  post.html — single post page. Breadcrumb, optional hero image, title/date/
-  author, tag chips, a "Source project →" link derived from the post's
-  canonical_project front matter, the rendered body, then a prev/next pager
-  across all posts sorted by date.
+  post.html — single post, essay/blog layout: a kicker (category), large title,
+  a clean byline (date · reading time · author), tag chips, the rendered body in
+  a comfortable reading measure, then a prev/next pager across all posts by date.
+  The "source project" credit lives at the end of the post body itself.
 {%- endcomment -%}
 
 {%- assign all_posts = site.posts | sort: "date" -%}
@@ -26,19 +26,12 @@ layout: default
   {%- assign next_post = all_posts[next_index] -%}
 {%- endif -%}
 
-<article class="tutorial post">
-  <div class="tutorial__inner">
+{%- assign words = content | number_of_words -%}
+{%- assign minutes = words | divided_by: 200 -%}
+{%- if minutes < 1 -%}{%- assign minutes = 1 -%}{%- endif -%}
 
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="{{ '/' | relative_url }}">Home</a>
-      <span class="breadcrumb__sep">/</span>
-      {%- assign post_category = page.categories | first -%}
-      {%- if post_category -%}
-        <a href="{{ '/category/' | append: post_category | append: '/' | relative_url }}">{{ post_category }}</a>
-        <span class="breadcrumb__sep">/</span>
-      {%- endif -%}
-      <span class="breadcrumb__current">{{ page.title }}</span>
-    </nav>
+<article class="post-article">
+  <div class="post-article__inner">
 
     {%- if page.hero -%}
     <figure class="post-hero">
@@ -46,64 +39,55 @@ layout: default
     </figure>
     {%- endif -%}
 
-    <header class="tutorial__header post__header">
-      <div class="tutorial__title-group">
-        <h1>{{ page.title }}</h1>
-        <p class="post-meta">
-          <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
-          {%- if page.author -%}<span aria-hidden="true"> · </span>{{ page.author }}{%- endif -%}
-          {%- if page.categories.size > 0 -%}
-            <span aria-hidden="true"> · </span>{{ page.categories | first }}
-          {%- endif -%}
-        </p>
-        {%- if page.tags.size > 0 -%}
-        <div class="tutorial__chips">
-          {%- for tag in page.tags -%}
-            <a class="chip" href="{{ '/tag/' | append: tag | relative_url }}/">{{ tag }}</a>
-          {%- endfor -%}
-        </div>
+    <header class="post-article__header">
+      {%- assign post_category = page.categories | first -%}
+      {%- if post_category -%}
+      <a class="post-article__kicker" href="{{ '/category/' | append: post_category | append: '/' | relative_url }}">{{ post_category }}</a>
+      {%- endif -%}
+      <h1 class="post-article__title">{{ page.title }}</h1>
+      <p class="post-article__byline">
+        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+        <span aria-hidden="true">·</span>
+        <span>{{ minutes }} min read</span>
+        {%- if page.author -%}
+        <span aria-hidden="true">·</span>
+        <span>{{ page.author }}</span>
         {%- endif -%}
-        {%- if page.canonical_project -%}
-        <p class="post-meta">
-          Source project →
-          <a href="{{ page.canonical_project.url }}" rel="noopener">{{ page.canonical_project.name }}</a>
-        </p>
-        {%- endif -%}
+      </p>
+      {%- if page.tags.size > 0 -%}
+      <div class="post-article__tags">
+        {%- for tag in page.tags -%}
+          <a class="chip" href="{{ '/tag/' | append: tag | relative_url }}/">{{ tag }}</a>
+        {%- endfor -%}
       </div>
+      {%- endif -%}
     </header>
 
-    <div class="tutorial__body">
+    <div class="tutorial__body post-article__body">
       {{ content }}
     </div>
 
-    {%- if page.canonical_project -%}
-    <p class="post-meta" style="margin-top:var(--space-6);padding-top:var(--space-5);border-top:1px solid var(--border);">
-      This post is adapted from
-      <a href="{{ page.canonical_project.url }}" rel="noopener">{{ page.canonical_project.name }}</a>
-      — the canonical, maintained version lives there:
-      <a href="https://github.com/{{ page.canonical_project.repo }}" rel="noopener">{{ page.canonical_project.repo }} ↗</a>.
-    </p>
-    {%- endif -%}
+    <footer class="post-article__footer">
+      <nav class="pager" aria-label="Post navigation">
+        {%- if prev_post -%}
+          <a class="pager__link pager__link--prev" href="{{ prev_post.url | relative_url }}">
+            <span class="pager__dir">← Previous</span>
+            <span class="pager__title">{{ prev_post.title }}</span>
+          </a>
+        {%- else -%}
+          <span></span>
+        {%- endif -%}
 
-    <nav class="pager" aria-label="Post navigation">
-      {%- if prev_post -%}
-        <a class="pager__link pager__link--prev" href="{{ prev_post.url | relative_url }}">
-          <span class="pager__dir">← Previous</span>
-          <span class="pager__title">{{ prev_post.title }}</span>
-        </a>
-      {%- else -%}
-        <span></span>
-      {%- endif -%}
-
-      {%- if next_post -%}
-        <a class="pager__link pager__link--next" href="{{ next_post.url | relative_url }}">
-          <span class="pager__dir">Next →</span>
-          <span class="pager__title">{{ next_post.title }}</span>
-        </a>
-      {%- else -%}
-        <span></span>
-      {%- endif -%}
-    </nav>
+        {%- if next_post -%}
+          <a class="pager__link pager__link--next" href="{{ next_post.url | relative_url }}">
+            <span class="pager__dir">Next →</span>
+            <span class="pager__title">{{ next_post.title }}</span>
+          </a>
+        {%- else -%}
+          <span></span>
+        {%- endif -%}
+      </nav>
+    </footer>
 
   </div>
 </article>

@@ -858,3 +858,78 @@ table :is(th, td) code {
 }
 .status--unverified { background: #fff8ef; border-color: #f0c98a; color: #8a5a00; }
 .status--verified   { background: #f1f8f2; border-color: #9cc79f; color: #2e7d32; }
+
+/* ============================================================
+   Blog article (essay) layout — _layouts/post.html
+   Reuses .tutorial__body for rich content (code, figures, tables,
+   callouts) and overrides the "book" feel: no breadcrumb, no section
+   accent bar, larger airier reading type, a clean byline.
+   ============================================================ */
+.post-article {
+  padding: var(--space-8) 0 var(--space-9);
+}
+.post-article__inner {
+  max-width: 46rem;            /* ~736px — essay reading measure */
+  margin: 0 auto;
+  padding: 0 var(--space-5);
+}
+
+.post-article__header {
+  margin-bottom: var(--space-7);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border);
+}
+.post-article__kicker {
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+}
+.post-article__kicker:hover { color: var(--accent-hover); text-decoration: none; }
+.post-article__title {
+  font-size: clamp(2rem, 4.5vw, 2.85rem);
+  line-height: 1.12;
+  letter-spacing: -.02em;
+  margin: var(--space-3) 0 var(--space-4);
+}
+.post-article__byline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  align-items: center;
+  font-size: .95rem;
+  color: var(--ink-muted);
+  margin: 0 0 var(--space-4);
+}
+.post-article__byline time { color: var(--ink-muted); }
+.post-article__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Essay body: larger type, airier leading, no book section markers */
+.post-article__body { font-size: 1.15rem; line-height: 1.8; }
+.post-article__body p { margin: 0 0 var(--space-5); }
+.post-article__body > p:first-of-type {   /* lead paragraph */
+  font-size: 1.3rem;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.post-article__body h2 {
+  font-size: 1.6rem;
+  margin-top: var(--space-8);
+  padding-top: 0;
+}
+.post-article__body h2::before { content: none; }   /* drop the book accent bar */
+.post-article__body h3 {
+  font-size: 1.25rem;
+  margin-top: var(--space-6);
+}
+
+.post-article__footer {
+  margin-top: var(--space-8);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border);
+}
