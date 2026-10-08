@@ -24,18 +24,13 @@ pagination:
   <div class="container">
     <h2 class="section-heading">Latest posts</h2>
     <p class="section-sub">
-      Field notes mined from the workshops and reference builds — the stories
-      that don't fit in a chapter footer.
+      Field notes mined from the workshops, tutorials, and reference builds.
     </p>
 
     {%- if paginator.posts.size > 0 -%}
-    <div class="cards">
-      {%- for post in paginator.posts -%}
-        {% include post_card.html post=post %}
-      {%- endfor -%}
-    </div>
+    {% include post_table.html posts=paginator.posts %}
     {%- else -%}
-    <p class="section-sub">No posts yet — check back soon.</p>
+    <p class="section-sub">No posts yet; check back soon.</p>
     {%- endif -%}
 
     {%- if paginator.total_pages > 1 -%}

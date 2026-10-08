@@ -22,11 +22,7 @@ layout: default
     <h1 class="section-heading">{{ page.title }}</h1>
 
     {%- if paginator.posts.size > 0 -%}
-    <div class="cards">
-      {%- for post in paginator.posts -%}
-        {% include post_card.html post=post %}
-      {%- endfor -%}
-    </div>
+    {% include post_table.html posts=paginator.posts %}
     {%- else -%}
     <p class="section-sub">No posts here yet.</p>
     {%- endif -%}

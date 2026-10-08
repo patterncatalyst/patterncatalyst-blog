@@ -1,0 +1,31 @@
+{%- comment -%}
+  post_table.html — a table of posts, used by the home page and the
+  tag/category autopages.
+
+  Usage:
+      {% include post_table.html posts=paginator.posts %}
+
+  Required: posts (a list of Jekyll post/document objects)
+{%- endcomment -%}
+{%- assign posts = include.posts -%}
+<table>
+  <colgroup>
+    <col style="width:52%"><col style="width:14%"><col style="width:16%"><col style="width:18%">
+  </colgroup>
+  <thead>
+    <tr><th>Post</th><th>Date</th><th>Category</th><th>Tags</th></tr>
+  </thead>
+  <tbody>
+    {%- for post in posts -%}
+    <tr>
+      <td>
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        {%- if post.excerpt -%}<br><small>{{ post.excerpt | strip_html | truncate: 160 }}</small>{%- endif -%}
+      </td>
+      <td><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time></td>
+      <td>{%- if post.categories.size > 0 -%}{{ post.categories | first }}{%- else -%}—{%- endif -%}</td>
+      <td>{%- for tag in post.tags limit: 4 -%}<span class="chip">{{ tag }}</span> {% endfor -%}</td>
+    </tr>
+    {%- endfor -%}
+  </tbody>
+</table>
