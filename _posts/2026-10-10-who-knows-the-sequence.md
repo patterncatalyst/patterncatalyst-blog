@@ -241,6 +241,101 @@ document, which we can inspect and version," you want a workflow. Pick the shape
 whose answer you can live with during an incident, and the library choice mostly
 follows from there.
 
+## Bonus: Camel's Saga EIP, and why it changes the state story
+
+Here is a property the three coordinators share: all of them are
+stateless. The Camel route and the Flow document each *describe* the sequence,
+but the running service holds nothing between requests. A request arrives, the
+sequence executes, the service forgets. That is what lets you run many replicas
+and scale them to zero without a second thought, and it is the same posture a
+well-behaved service keeps in any language.
+
+Camel has a first-class way to make a route survive partial failure: the Saga
+EIP, its implementation of the saga / long-running-action pattern. You mark the
+route `.saga()`, and each participating step registers a `.compensation()`
+endpoint (and, if it needs one, a `.completion()` endpoint). If a later step
+fails, Camel calls the earlier steps' compensations in reverse order to undo
+their side effects:
+
+```java
+// Camel Saga — OrderSagaRoute.java
+// Same top-to-bottom sequence, but each step now declares how to undo itself.
+from("direct:place-order")
+    .saga()
+        .timeout(30, TimeUnit.SECONDS)           // a stuck saga auto-compensates
+    .to("direct:capture-payment")
+    .to("direct:arrange-shipping");
+
+from("direct:capture-payment")
+    .saga()
+        .propagation(SagaPropagation.MANDATORY)
+        .compensation("direct:refund-payment")   // called in reverse if a later step fails
+        .option("paymentId", simple("${body.paymentId}"))
+    .bean(paymentService, "capture");
+
+from("direct:refund-payment")                     // the compensating action — must be idempotent
+    .bean(paymentService, "refund");              // reads the paymentId saved via option()
+```
+
+That is a real improvement over the default exception propagation in the
+comparison above. But look at what it costs. A saga is a state machine: it moves
+through Active, Completing, and Completed on the happy path, or through
+Compensating and Compensated on failure, with a timeout that auto-compensates a
+saga that gets stuck. Something has to hold where each in-flight saga currently
+is.
+
+{% include excalidraw.html
+   file="camel-saga-state-machine"
+   alt="A state machine on the left and a list of persisted state on the right. The state machine starts at Active (saga started). On all steps ok it moves to Completing (run completion URIs) and then Completed. On error or timeout it moves from Active to Compensating (undo in reverse) and then, via the compensation URIs, to Compensated. The right panel lists what the coordinator must persist per in-flight saga: the participants and their compensation and completion URIs, the saved option() values such as the ids a refund needs, the status and which step is next, and the timeout deadline. A note explains that InMemorySagaService keeps this in the JVM heap so a crash mid-saga loses it and nothing compensates, whereas an LRA coordinator persists it and the Camel service goes back to stateless."
+   caption="A saga is a state machine. The sequence can live in code; the saga's progress has to live in a store." %}
+
+The default `CamelSagaService` is `InMemorySagaService`, and it keeps all of
+that in the JVM heap. Fine for a demo, and fatal in production: if the process
+dies between "payment captured" and "shipping arranged," the saga state dies with
+it, no compensation ever runs, and you are left with a payment that was captured
+and will never be refunded. The stateless property we just praised is gone, in
+the one way that hurts most.
+
+So making a Camel saga correct is, in the end, a state-externalization exercise.
+You delegate the saga state to a coordinator that persists it: `camel-lra` plus a
+MicroProfile LRA coordinator (Narayana) writes the participant list, the
+compensation URIs, and the saved options to durable storage, and after a restart
+the coordinator drives the outstanding compensations to completion.
+
+```java
+// Non-durable: saga state lives in the JVM heap, lost on crash.
+camelContext.addService(new InMemorySagaService());
+
+// Durable: delegate saga state to an LRA coordinator that persists it,
+// so the Camel service itself goes back to holding nothing.
+LRASagaService saga = new LRASagaService();
+saga.setCoordinatorUrl("http://lra-coordinator:8080");
+saga.setLocalParticipantUrl("http://ai-rules-service:8080");
+camelContext.addService(saga);
+```
+
+The rest of the work follows from treating it as a state machine with external
+storage: give every step a compensation route, use `.option(...)` to persist the
+identifiers those compensations need, make each compensation idempotent because
+the coordinator may retry it, and set a `.timeout(...)` so a wedged saga does not
+sit half-applied forever. Do that and the state lives outside the process again,
+and the service is stateless once more. It is the same externalize-your-state
+move that keeps any service replaceable, applied to the one piece of coordination
+that does need to remember something.
+
+This is why the saga sits in a bonus rather than in the three-way comparison. The
+route and the workflow answer "who knows the sequence." The saga answers a second
+question on top of it, "who knows how far we got, and will that knowledge survive
+a crash," and answering it well means putting the progress somewhere durable. The
+sequence can live in code or in a document. The saga's state has to live in a
+store. Keeping those two questions separate is the whole point: add a saga only
+when you need the second answer, and know that you are trading the stateless
+posture for a coordinator you now have to operate.
+
+For the mechanics, see Camel's
+[Saga EIP](https://camel.apache.org/components/next/eips/saga-eip.html) and the
+[camel-lra component](https://camel.apache.org/components/next/others/lra.html).
+
 ---
 
 **Source project.** This post is drawn from
