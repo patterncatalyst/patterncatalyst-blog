@@ -203,8 +203,8 @@ the same bean.
 
 {% include excalidraw.html
    file="coupling-and-operational-cost"
-   alt="Two panels. On the left, Kafka choreography is drawn as a hub-and-spoke: order, payment, shipping, and notification services plus a schema registry all connect to a central Kafka bus, labeled as independent deploy units that fail, scale, and deploy independently. On the right, both orchestration legs live inside one box labeled ai-rules-service: a Camel route and a Flow workflow both delegate down to a single shared TriageService backed by Ollama and Drools, labeled as shared fate where one deploy, one outage, or one slow Ollama hits both."
-   caption="Operational cost tracks coupling: four independent deploy units versus one service where both coordinators share fate." %}
+   alt="Three side-by-side columns comparing the same order-triage saga under three coordinators. The Kafka choreography column: no coordinator, who-knows-it is no single artifact (four handlers joined by topic), coupling is loosest (shared schema only), ops cost is four services plus Kafka plus a schema registry, failure today is per-hop idempotency with no cross-hop compensation; best fit is an event others react to. The Camel route column: sequence in code, who-knows-it is one route read top to bottom, coupling is tight to the business bean (one file to edit), ops cost is one service with shared fate, failure today is default exception propagation; best fit is the sequence as reviewable code. The Quarkus Flow column: sequence in data, who-knows-it is one document (a declared task graph), coupling is tight to the business bean (one file to edit), ops cost is one service with shared fate, failure today is caller-side timeout only; best fit is an inspectable, versionable document."
+   caption="One saga, three coordinators, compared on the axes that bite in production: who knows the sequence, coupling, operational cost, and failure handling today." %}
 
 So the trade is legible. Choreography's loosest coupling buys the most
 independent operability at the highest service count. Both orchestration legs buy
