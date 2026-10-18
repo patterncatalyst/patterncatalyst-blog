@@ -25,8 +25,8 @@ collector a say in what leaves the building.
 
 ## A metric is a family of time series
 
-Start with the part that surprises people most. A metric is not one stream of
-numbers. It is a family of time series, one for every unique combination of
+A metric is not one stream of numbers. It is a family of time series, one for
+every unique combination of
 label values it has ever carried. A counter named `http_requests_total` with
 labels `method`, `route`, and `status_code` does not produce one series; it
 produces one per observed combination: `GET /cart 200`, `POST /checkout 500`,

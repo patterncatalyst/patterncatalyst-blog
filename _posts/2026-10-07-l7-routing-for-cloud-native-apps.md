@@ -31,7 +31,7 @@ Layer-7 router sees the whole *conversation*: host, path, headers, cookies, JWT 
 parameters, the HTTP method, the gRPC `service.method` pair. Every routing decision below
 operates on that envelope.
 
-TLS is the one nuance to keep in mind. An L4 balancer can route by SNI *without* terminating
+TLS is the one nuance. An L4 balancer can route by SNI *without* terminating
 TLS, which is cheap but opaque. An L7 router typically terminates TLS so it can read
 everything else, which is richer but slightly slower.
 
@@ -52,7 +52,7 @@ transformation. The **service mesh** (Istio with Envoy sidecars, or Linkerd) gov
 east/west traffic, giving every internal call mTLS, retries, outlier detection, and
 locality-aware load balancing. When a decision depends on business rules the platform can't
 know, routing pushes into the **app** itself. Each layer can refuse, transform, or branch the
-request, and each emits a trace span, so the request's journey is observable end to end.
+request, and each emits a trace span, so the request's path is observable end to end.
 
 ## Content-based routing
 

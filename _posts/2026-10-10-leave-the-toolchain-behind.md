@@ -8,7 +8,7 @@ canonical_project:
   name: "Optimizing Modern C++ with Containers"
   repo: "patterncatalyst/cpp-container-optimization-tutorial"
   url: "https://patterncatalyst.github.io/cpp-container-optimization-tutorial/"
-excerpt: "A 4 MB C++ binary routinely ships inside a 689 MB image. The fix isn't to shrink the toolchain, it's to leave it behind. Multi-stage builds plus the right UBI runtime tier get the same service down to 26 MB, and the tier you pick is really an incident-response decision."
+excerpt: "A 4 MB C++ binary routinely ships inside a 689 MB image. The fix isn't to shrink the toolchain, it's to leave it behind. Multi-stage builds plus the right UBI runtime tier get the same service down to 26 MB, and the tier you pick is an incident-response decision."
 ---
 
 A C++ service compiles to a 4 MB binary and ships inside a 689 MB image. The
@@ -53,7 +53,7 @@ second image for runtime and copy just the finished binary across. Only the
 final stage is tagged; the build stage is discarded the moment the build
 finishes.
 
-Here is the real build stage from the tutorial's demo, lightly trimmed:
+Here is the build stage from the tutorial's demo, lightly trimmed:
 
 ```dockerfile
 # Containerfile.ubi-multistage — build stage
