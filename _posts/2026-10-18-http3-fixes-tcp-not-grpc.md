@@ -13,21 +13,18 @@ excerpt: "The moment someone hears HTTP/3 fixes TCP's head-of-line blocking, the
 
 Sit in enough architecture reviews and you will hear this pair of sentences
 delivered as one thought: "HTTP/3 fixes TCP's head-of-line blocking, so once we
-move to it, gRPC gets faster." The first half is correct. The second half does
-not follow from it, and the gap between the two is where a lot of roadmap
-optimism leaks out. QUIC fixes problems that belong to TCP. gRPC's
-performance characteristics belong to HTTP/2, which is a different layer, and
-"gRPC over HTTP/3" is a distinct piece of engineering that has to be specified
-and built on its own. As of early 2026, neither of the two reference
-implementations behind most production gRPC ships it.
+move to it, gRPC gets faster." The first half is correct. The second does not
+follow, and teams that conflate them plan around a speedup that will not arrive.
+QUIC fixes problems that belong to TCP. gRPC's performance characteristics belong
+to HTTP/2, a different layer, and "gRPC over HTTP/3" is a distinct piece of
+engineering that has to be specified and built on its own. As of early 2026,
+neither of the two reference implementations behind most production gRPC ships it.
 
-This post walks that boundary carefully, because it is a boundary that costs real
-planning time when it is drawn in the wrong place. It is mined from a gRPC course
-whose every hands-on chapter ships the same Protocol Buffers contract in both
-Quarkus and Python, and whose Chapter 24 does something uncommon: it states
+This post is mined from a gRPC course whose every hands-on chapter ships the same
+Protocol Buffers contract in both Quarkus and Python. Its Chapter 24 states
 outright that gRPC-over-HTTP/3 does not exist on these stacks yet, rather than
-hedging around a hypothetical. Then it builds a demo that proves exactly what it
-can prove and not one inch more.
+hedging around a hypothetical, then builds a demo that keeps the two transports
+strictly separate.
 
 ## What QUIC fixes
 
@@ -37,9 +34,8 @@ many independent streams over one TCP connection, but TCP underneath has no idea
 those streams are independent. It sees one ordered byte sequence. Lose a single
 segment, and every stream sharing that connection stalls behind the
 retransmission, including the streams whose own bytes already arrived intact.
-This is head-of-line blocking, and the thing worth naming precisely is that it is
-a *transport-level* block. It has nothing to do with HTTP and everything to do
-with TCP's ordering promise.
+This is head-of-line blocking, and it is a *transport-level* block: it has nothing
+to do with HTTP and everything to do with TCP's ordering promise.
 
 QUIC, the transport HTTP/3 runs on, moves to UDP and tracks each stream's
 delivery independently. A lost packet belonging to one stream stalls that stream's
@@ -57,9 +53,8 @@ a phone moving from Wi-Fi to cellular, without tearing down the connection,
 because QUIC identifies a connection by a connection ID rather than by the client
 IP and port tuple that TCP is stuck with.
 
-All three are real improvements. Notice what they have in common: every one is a
-fix for something TCP got wrong. None of them says a word about which application
-protocol rides on top.
+All three are real improvements, and every one fixes something TCP got wrong. None
+of them says a word about which application protocol rides on top.
 
 ## Why "gRPC gets faster" doesn't follow
 
@@ -140,7 +135,7 @@ async def probe(host: str, port: int, path: str, timeout: float) -> int:
     # ...
 ```
 
-When it runs, it says exactly what it did, and refuses to claim more:
+When it runs, it reports what it did and names what it did not do:
 
 ```
 h3_probe: QUIC handshake_completed=True alpn=h3 status=200
@@ -148,16 +143,16 @@ h3_probe: HTTP/3 transport confirmed over QUIC — this is the transport,
           not gRPC-over-HTTP/3 (no gRPC call was made)
 ```
 
-One more discipline is worth copying. QUIC rides on UDP, and UDP is blocked
-between containers on far more CI runners and corporate networks than TCP is.
-So the example treats this probe as capability-gated: it retries a few times to
-absorb Caddy's cold start, and if it still can't complete, it logs a clear `SKIP`
-with a documented fallback and lets the build continue. "Can this sandbox route
-UDP between two containers" is a property of the environment, not of the code, and
-wiring a build failure to it would teach a reader the wrong lesson.
+QUIC rides on UDP, and UDP is blocked between containers on far more CI runners
+and corporate networks than TCP is. The example treats this probe as
+capability-gated: it retries a few times to absorb Caddy's cold start, and if it
+still can't complete, it logs a clear `SKIP` with a documented fallback and lets
+the build continue. Whether a sandbox routes UDP between two containers is a
+property of the environment, not of the code, so wiring a build failure to it
+would signal a code defect that is not there.
 
-Meanwhile the actual gRPC call, the one the course measures, runs over HTTP/2 on
-both stacks and is plenty fast without any of this:
+Meanwhile the gRPC call the course measures runs over HTTP/2 on both stacks, and
+it is fast without any of this:
 
 ```
 Quarkus:  rps=1888.10  p99=12.58ms  errors=0
@@ -225,11 +220,11 @@ a throughput number almost never settles it.
 Do not let an HTTP/3 timeline move a transport decision. HTTP/2 is the gRPC
 transport everywhere today, on every mainstream stack, and that stays true until
 grpc-java and grpcio (or whichever implementation you depend on) ship a native
-QUIC binding. When that lands it is worth revisiting, not before. QUIC is a real
-fix for TCP's head-of-line blocking, and that fix accrues to HTTP/3 and to
-plenty of protocols built directly on QUIC. It does not retroactively upgrade a
-protocol defined over HTTP/2. Keep the layer where the fix lives separate from the
-layer where your protocol lives, and the roadmap optimism stops leaking.
+QUIC binding. When that lands it is worth revisiting, not before. QUIC's fix for
+head-of-line blocking accrues to HTTP/3 and to protocols built directly on QUIC;
+it does not reach a protocol defined over HTTP/2. Keep the layer where the fix
+lives separate from the layer where your protocol lives, and the two questions
+stop collapsing into one wrong answer.
 
 ---
 
