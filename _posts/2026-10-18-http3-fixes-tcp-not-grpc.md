@@ -232,14 +232,13 @@ stop collapsing into one wrong answer.
 [Chapter 24, cross-protocol choices and HTTP/3](https://patterncatalyst.github.io/api-patterns-and-practices-grpc/docs/24-cross-protocol-http3/)
 of [API Patterns & Practices: gRPC](https://patterncatalyst.github.io/api-patterns-and-practices-grpc/),
 a contract-first gRPC course that ships one Protocol Buffers shipping-and-cargo
-contract in both Quarkus and Python, validated under Buf. The code shown here is
-real, pinned to the `r1.0` tag:
+contract in both Quarkus and Python, validated under Buf. The files shown here:
 [`Caddyfile`](https://github.com/patterncatalyst/api-patterns-and-practices-grpc/blob/r1.0/examples/24-cross-protocol-http3/caddy/Caddyfile),
 [`h3_probe.py`](https://github.com/patterncatalyst/api-patterns-and-practices-grpc/blob/r1.0/examples/24-cross-protocol-http3/python/app/h3_probe.py),
 and
 [`routing_service.py`](https://github.com/patterncatalyst/api-patterns-and-practices-grpc/blob/r1.0/examples/24-cross-protocol-http3/python/app/routing_service.py);
 the chapter's [`verify.sh`](https://github.com/patterncatalyst/api-patterns-and-practices-grpc/blob/r1.0/examples/24-cross-protocol-http3/verify.sh)
 runs all three services, measures the gRPC call with `ghz`, and runs the HTTP/3
-probe without ever letting it fail the build. Full source is on
+probe without failing the build on it. Full source is on
 [GitHub](https://github.com/patterncatalyst/api-patterns-and-practices-grpc).
 More from the catalog on the [Pattern Catalyst hub]({{ site.hub_url }}).
