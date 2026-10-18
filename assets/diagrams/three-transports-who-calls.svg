@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" font-family="'Red Hat Text', system-ui, sans-serif" role="img">
+<defs><marker id="a" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker><marker id="am" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b8650a"/></marker></defs>
+<rect x="20" y="46" width="270" height="400" rx="12" fill="#fafafa" stroke="#ddd"/>
+<text x="32" y="66" font-size="12" font-weight="700" fill="#888">gRPC over HTTP/2</text>
+<rect x="315" y="46" width="270" height="400" rx="12" fill="#fafafa" stroke="#ddd"/>
+<text x="327" y="66" font-size="12" font-weight="700" fill="#888">REST over HTTP/2 (SSE / chunked)</text>
+<rect x="610" y="46" width="270" height="400" rx="12" fill="#fafafa" stroke="#ddd"/>
+<text x="622" y="66" font-size="12" font-weight="700" fill="#888">WebSockets</text>
+<rect x="40" y="86" width="230" height="52" rx="9" fill="#fff8ef" stroke="#e8870c" stroke-width="2"/>
+<text x="155.0" y="110.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Contract</text>
+<text x="155.0" y="127.0" font-size="11.5" fill="#555555" text-anchor="middle">Protobuf, CI-enforced</text>
+<rect x="40" y="152" width="230" height="52" rx="9" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+<text x="155.0" y="176.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Direction</text>
+<text x="155.0" y="193.0" font-size="11.5" fill="#555555" text-anchor="middle">all four RPC shapes</text>
+<rect x="40" y="218" width="230" height="52" rx="9" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+<text x="155.0" y="242.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Browser reach</text>
+<text x="155.0" y="259.0" font-size="11.5" fill="#555555" text-anchor="middle">needs grpc-web + proxy</text>
+<rect x="40" y="284" width="230" height="52" rx="9" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+<text x="155.0" y="308.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Backpressure</text>
+<text x="155.0" y="325.0" font-size="11.5" fill="#555555" text-anchor="middle">HTTP/2 flow control</text>
+<rect x="40" y="368" width="230" height="58" rx="9" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+<text x="155.0" y="395.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Best when</text>
+<text x="155.0" y="412.0" font-size="11.5" fill="#555555" text-anchor="middle">both ends are services you own</text>
+<rect x="335" y="86" width="230" height="52" rx="9" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+<text x="450.0" y="110.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Contract</text>
+<text x="450.0" y="127.0" font-size="11.5" fill="#555555" text-anchor="middle">OpenAPI, hand-maintained</text>
+<rect x="335" y="152" width="230" height="52" rx="9" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+<text x="450.0" y="176.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Direction</text>
+<text x="450.0" y="193.0" font-size="11.5" fill="#555555" text-anchor="middle">one-way: SSE / chunked</text>
+<rect x="335" y="218" width="230" height="52" rx="9" fill="#fff8ef" stroke="#e8870c" stroke-width="2"/>
+<text x="450.0" y="242.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Browser reach</text>
+<text x="450.0" y="259.0" font-size="11.5" fill="#555555" text-anchor="middle">native fetch / EventSource</text>
+<rect x="335" y="284" width="230" height="52" rx="9" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+<text x="450.0" y="308.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Backpressure</text>
+<text x="450.0" y="325.0" font-size="11.5" fill="#555555" text-anchor="middle">application-level only</text>
+<rect x="335" y="368" width="230" height="58" rx="9" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+<text x="450.0" y="395.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Best when</text>
+<text x="450.0" y="412.0" font-size="11.5" fill="#555555" text-anchor="middle">a browser needs a one-way feed</text>
+<rect x="630" y="86" width="230" height="52" rx="9" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+<text x="745.0" y="110.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Contract</text>
+<text x="745.0" y="127.0" font-size="11.5" fill="#555555" text-anchor="middle">none; out of band</text>
+<rect x="630" y="152" width="230" height="52" rx="9" fill="#fff8ef" stroke="#e8870c" stroke-width="2"/>
+<text x="745.0" y="176.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Direction</text>
+<text x="745.0" y="193.0" font-size="11.5" fill="#555555" text-anchor="middle">full-duplex, free-form</text>
+<rect x="630" y="218" width="230" height="52" rx="9" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+<text x="745.0" y="242.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Browser reach</text>
+<text x="745.0" y="259.0" font-size="11.5" fill="#555555" text-anchor="middle">native WebSocket API</text>
+<rect x="630" y="284" width="230" height="52" rx="9" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+<text x="745.0" y="308.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Backpressure</text>
+<text x="745.0" y="325.0" font-size="11.5" fill="#555555" text-anchor="middle">application-level only</text>
+<rect x="630" y="368" width="230" height="58" rx="9" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+<text x="745.0" y="395.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Best when</text>
+<text x="745.0" y="412.0" font-size="11.5" fill="#555555" text-anchor="middle">the UI needs fluid full-duplex</text>
+<text x="450" y="36" font-size="12" fill="#64748b" text-anchor="middle">the deciding question is who calls and which way data flows — not a throughput number</text>
+</svg>
