@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" font-family="'Red Hat Text', system-ui, sans-serif" role="img">
+<defs><marker id="a" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker><marker id="am" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b8650a"/></marker></defs>
+<rect x="20" y="50" width="410" height="360" rx="12" fill="#fafafa" stroke="#ddd"/>
+<text x="32" y="70" font-size="12" font-weight="700" fill="#888">HTTP/2 over TCP — one ordered byte stream</text>
+<rect x="470" y="50" width="410" height="360" rx="12" fill="#fafafa" stroke="#ddd"/>
+<text x="482" y="70" font-size="12" font-weight="700" fill="#888">HTTP/3 over QUIC — independent per-stream delivery</text>
+<rect x="45" y="90" width="150" height="46" rx="9" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+<text x="120.0" y="111.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Stream A</text>
+<text x="120.0" y="128.0" font-size="11.5" fill="#555555" text-anchor="middle">arrived intact</text>
+<rect x="45" y="152" width="150" height="46" rx="9" fill="#fff8ef" stroke="#e8870c" stroke-width="2"/>
+<text x="120.0" y="173.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Stream B</text>
+<text x="120.0" y="190.0" font-size="11.5" fill="#555555" text-anchor="middle">1 lost segment</text>
+<rect x="45" y="214" width="150" height="46" rx="9" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+<text x="120.0" y="235.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Stream C</text>
+<text x="120.0" y="252.0" font-size="11.5" fill="#555555" text-anchor="middle">arrived intact</text>
+<rect x="260" y="128" width="150" height="94" rx="9" fill="#f4f4f4" stroke="#888888" stroke-width="1.5"/>
+<text x="335.0" y="165.5" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">TCP</text>
+<text x="335.0" y="182.5" font-size="11.5" fill="#555555" text-anchor="middle">strict in-order</text>
+<text x="335.0" y="197.5" font-size="11.5" fill="#555555" text-anchor="middle">delivery</text>
+<rect x="45" y="300" width="365" height="62" rx="9" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+<text x="227.5" y="329.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">One lost segment stalls ALL three streams</text>
+<text x="227.5" y="346.0" font-size="11.5" fill="#555555" text-anchor="middle">transport-level head-of-line blocking</text>
+<rect x="495" y="90" width="150" height="46" rx="9" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+<text x="570.0" y="111.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Stream A</text>
+<text x="570.0" y="128.0" font-size="11.5" fill="#555555" text-anchor="middle">flows normally</text>
+<rect x="495" y="152" width="150" height="46" rx="9" fill="#fff8ef" stroke="#e8870c" stroke-width="2"/>
+<text x="570.0" y="173.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Stream B</text>
+<text x="570.0" y="190.0" font-size="11.5" fill="#555555" text-anchor="middle">retransmits alone</text>
+<rect x="495" y="214" width="150" height="46" rx="9" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+<text x="570.0" y="235.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Stream C</text>
+<text x="570.0" y="252.0" font-size="11.5" fill="#555555" text-anchor="middle">flows normally</text>
+<rect x="710" y="128" width="150" height="94" rx="9" fill="#f4f4f4" stroke="#888888" stroke-width="1.5"/>
+<text x="785.0" y="165.5" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">QUIC</text>
+<text x="785.0" y="182.5" font-size="11.5" fill="#555555" text-anchor="middle">per-stream</text>
+<text x="785.0" y="197.5" font-size="11.5" fill="#555555" text-anchor="middle">delivery (UDP)</text>
+<rect x="495" y="300" width="365" height="62" rx="9" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+<text x="677.5" y="329.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">A lost packet stalls only its own stream</text>
+<text x="677.5" y="346.0" font-size="11.5" fill="#555555" text-anchor="middle">no cross-stream head-of-line blocking</text>
+<path d="M195,113 L260,150" fill="none" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+<path d="M195,175 L260,175" fill="none" stroke="#b8650a" stroke-width="2" marker-end="url(#am)"/>
+<path d="M195,237 L260,200" fill="none" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+<path d="M645,113 L710,150" fill="none" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+<path d="M645,175 L710,175" fill="none" stroke="#b8650a" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#am)"/>
+<path d="M645,237 L710,200" fill="none" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+<text x="225" y="40" font-size="12" fill="#64748b" text-anchor="middle">all streams share one TCP connection</text>
+<text x="675" y="40" font-size="12" fill="#64748b" text-anchor="middle">streams tracked independently over UDP</text>
+</svg>
