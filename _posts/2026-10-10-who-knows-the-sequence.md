@@ -15,9 +15,8 @@ Every event-driven system eventually runs into one question, and it is not a
 framework question. When several steps have to happen in order, who decides the
 order? An order is placed, a payment is captured, a shipment is dispatched, a
 customer is notified. Something has to know that `payment` comes before
-`shipping`. The interesting part is that "something" can live in three
-different places, and where you put it decides more about the system than which
-library you picked.
+`shipping`. That "something" can live in three different places, and where you
+put it decides more about the system than which library you picked.
 
 The Quarkus data-mesh reference architecture runs all three answers side by side
 over the same order-triage domain, with the same business logic underneath, so
@@ -125,7 +124,7 @@ public PaymentCaptured process(OrderPlaced orderPlaced) {
 The only shared thing is the schema, the `OrderPlaced` Avro type. No participant
 holds a reference to another participant's class, bean, or address.
 
-Here is the part that cuts against the tidy story. Both orchestration legs hold a
+The tidy story breaks down here. Both orchestration legs hold a
 direct `@Inject TriageService` reference and call its methods, so their coupling
 to the business logic is equally tight, and tighter than choreography's. Adding a
 step means editing the one coordinator: in Camel you insert a line into the fluent
@@ -243,7 +242,7 @@ follows from there.
 
 ## Bonus: Camel's Saga EIP, and why it changes the state story
 
-Here is a property the three coordinators share: all of them are
+The three coordinators share a property: all of them are
 stateless. The Camel route and the Flow document each *describe* the sequence,
 but the running service holds nothing between requests. A request arrives, the
 sequence executes, the service forgets. That is what lets you run many replicas
@@ -344,8 +343,8 @@ and the deeper
 [Appendix comparing the three engines](https://patterncatalyst.github.io/datamesh-reference-arch-quarkus/docs/21-orchestration-engines-compared/)
 of the
 [Data Mesh Reference Architecture on Quarkus](https://patterncatalyst.github.io/datamesh-reference-arch-quarkus/),
-which runs all three legs green over one shipping/order domain. The code shown
-here is real:
+which runs all three legs green over one shipping/order domain. The files shown
+here:
 [`OrderTriageRoute.java`](https://github.com/patterncatalyst/datamesh-reference-arch-quarkus/blob/main/examples/ai-rules-service/src/main/java/com/patterncatalyst/datamesh/airules/OrderTriageRoute.java),
 [`OrderTriageWorkflow.java`](https://github.com/patterncatalyst/datamesh-reference-arch-quarkus/blob/main/examples/ai-rules-service/src/main/java/com/patterncatalyst/datamesh/airules/OrderTriageWorkflow.java),
 and
