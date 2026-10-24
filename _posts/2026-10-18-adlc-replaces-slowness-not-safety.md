@@ -8,36 +8,36 @@ canonical_project:
   name: "Modernizing Enterprise Applications"
   repo: "patterncatalyst/modernizing-enterprise-applications"
   url: "https://patterncatalyst.github.io/modernizing-enterprise-applications/"
-excerpt: "The software lifecycle most teams run is shaped by one fact: writing code is slow relative to the cost of being wrong. Agents break that assumption, and the serial human gates that provided the SDLC's safety go with it. An AI Development Lifecycle is what you adopt to rebuild that safety at the new pace."
+excerpt: "The software lifecycle most teams run is shaped by one fact: writing code is slow relative to the cost of being wrong. Agents break that assumption, and the serial human gates that provided the SDLC's safety go with it. An Agentic Development Lifecycle is what you adopt to rebuild that safety at the new pace."
 ---
 
 The software development lifecycle most teams run looks the way it does for one
-reason, and it is not bureaucracy. Writing code is slow relative to the cost of
+reason, and it's not bureaucracy. Writing code is slow relative to the cost of
 being wrong. When a line takes minutes of human attention to produce and hours to
 review properly, you economize on attempts: front-load the thinking into
 requirements and design, specialize the roles so an analyst, an architect, a
 developer, a tester, a reviewer, and an operator each carry one concern, and
 insert a code-review stage as cheap insurance against an expensive mistake. Every
-one of those stages is a queue with a context switch at both ends. That is why
+one of those stages is a queue with a context switch at both ends. That's why
 modernizing a monolith under the traditional SDLC is measured in quarters per
 extracted service: not because the code is hard to write, but because it has to
 pass six serially-scheduled human gates to be trusted.
 
-A coding agent breaks the assumption the whole shape rests on. It does not remove
+A coding agent breaks the assumption the whole shape rests on. It doesn't remove
 those stages; it collapses the time each one takes and folds several into one
 continuous loop. "Requirements" becomes stating intent in a paragraph. "Design"
-and "implementation" merge, because for an agent there is no handoff cost between
+and "implementation" merge, because for an agent there's no handoff cost between
 designing a function and writing it. "Testing" and "review" become the agent
 writing and running tests alongside the code, with a human reading a finished diff
 instead of an abstract plan. Weeks of queueing delay become hours of one engineer
 working with one model.
 
-Here is the part most "AI makes us faster" pitches skip. The SDLC's slowness was
+Here's the part most "AI makes us faster" pitches skip. The SDLC's slowness was
 also where a lot of its safety lived. Six serial human gates are a crude but real
 form of error-correction. Collapse the stages for speed without replacing that
-error-correction with something else, and you have built a faster way to ship a
-wrong answer. The value of an **AI Development Lifecycle (ADLC)** is not the
-speed, which an agent gives you the moment it is in the loop. It is putting the
+error-correction with something else, and you've built a faster way to ship a
+wrong answer. The value of an **Agentic Development Lifecycle (ADLC)** isn't the
+speed, which an agent gives you the moment it's in the loop. It's putting the
 safety back, in a form that keeps up with the new pace.
 
 ## Where the safety moves
@@ -56,21 +56,21 @@ agent proposes an approach), **Generate** (it writes the code and tests),
 **Verify** (a second, more skeptical pass runs the suite and a security scan),
 **Operate** (the change rolls out behind a flag), and **Reconcile** (the ledger is
 updated with what happened). The two human gates sit at Plan and Verify,
-and they are the whole argument. An agent can produce a plan, but it cannot be
+and they're the whole argument. An agent can produce a plan, but it can't be
 trusted to decide that its own plan is the right one to run against a production
 system someone else depends on. An agent can run a suite and report green, but it
-cannot be the one who decides that green is sufficient evidence to retire the code
+can't be the one who decides that green is sufficient evidence to retire the code
 it just replaced. The first is a business judgment; the second is a sign-off. Both
 stay with a person. Everything between them is delegated.
 
 ## The cheap gate that makes speed safe
 
-Two human gates are not enough on their own. If "Verify" meant a human re-reading
+Two human gates aren't enough on their own. If "Verify" meant a human re-reading
 every diff, the review bottleneck would come straight back. The ADLC's answer is to
 make verification so cheap it runs after every candidate change, not just before a
 release. In this modernization, the monolith's own Newman collection, captured
 once against the running "before" system, becomes the **behavior-equivalence
-suite**, and it is re-run unchanged against every extracted service:
+suite**, and it's re-run unchanged against every extracted service:
 
 ```bash
 # demos/demo-equivalence.sh
@@ -100,7 +100,7 @@ review hours nobody has.
 
 This is why modernization is the case that needs the discipline most. A throwaway
 prototype can skip from Generate straight to Operate and nobody is worse off if
-it is wrong. Strangling pieces off a monolith is the opposite: refactoring under a
+it's wrong. Strangling pieces off a monolith is the opposite: refactoring under a
 hard constraint (the system must keep behaving exactly as it already does)
 applied to code a different team wrote, for reasons nobody fully remembers, that
 real customers depend on today. The agentic loop's raw speed makes that the *most*
@@ -174,12 +174,12 @@ public class DatabaseReady implements HealthCheck {
 }
 ```
 
-The two do the same thing by design. The point is not that the agent-generated
-version is cleverer; it is nearly a direct translation. The point is that it exists
+The two do the same thing by design. The agent didn't write anything cleverer
+here; it produced a near-direct translation. What changes is that it exists
 in minutes rather than a sprint, and that trusting it rests on a gate that re-runs
-in seconds rather than a second engineer's free hour. That is the trade the ADLC
+in seconds rather than a second engineer's free hour. That's the trade the ADLC
 makes everywhere: move the human from the things a gate can check to the two
-decisions a gate cannot.
+decisions a gate can't.
 
 ## The differences, side by side
 
@@ -195,14 +195,14 @@ decisions a gate cannot.
 
 ## The takeaway
 
-Adopting an ADLC is not a decision to go faster; the agent already did that, and
-going faster without changing anything else is the dangerous part. It is a decision
+Adopting an ADLC isn't a decision to go faster; the agent already did that, and
+going faster without changing anything else is the dangerous part. It's a decision
 about where to spend the human judgment you have left once the typing is cheap.
-Put it at the two gates a machine cannot stand in for, the plan that commits you to
+Put it at the two gates a machine can't stand in for, the plan that commits you to
 an approach and the sign-off that retires the old code, and make everything between
 them lean on a gate cheap enough to run on every attempt. Do that, and the agent's
 speed stops being a way to ship regressions faster and becomes a way to run more
-experiments safely. Skip it, and you have kept the SDLC's biggest liability, its
+experiments safely. Skip it, and you've kept the SDLC's biggest liability, its
 capacity to ship a confident wrong answer, while discarding the slowness that used
 to catch it.
 

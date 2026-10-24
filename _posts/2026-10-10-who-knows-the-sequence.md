@@ -11,7 +11,7 @@ canonical_project:
 excerpt: "An order places, a payment captures, a shipment dispatches. Who decides that order? Kafka choreography, a Camel route, and a Quarkus Flow document each answer differently, and the real split isn't declarative versus imperative. It's who holds the sequence when production breaks."
 ---
 
-Every event-driven system eventually runs into one question, and it is not a
+Every event-driven system eventually runs into one question, and it isn't a
 framework question. When several steps have to happen in order, who decides the
 order? An order is placed, a payment is captured, a shipment is dispatched, a
 customer is notified. Something has to know that `payment` comes before
@@ -21,9 +21,9 @@ put it decides more about the system than which library you picked.
 The Quarkus data-mesh reference architecture runs all three answers side by side
 over the same order-triage domain, with the same business logic underneath, so
 the only thing that varies is the coordination shape. That makes it a clean place
-to compare them. This post walks the three, then gets to the distinction that
-matters in an incident: not whether the sequence is written as code or declared
-as data, but whether any single artifact knows the sequence at all.
+to compare them: three legs, then the distinction that matters in an incident.
+It has nothing to do with whether the sequence is written as code or declared as
+data. It comes down to whether any single artifact knows the sequence at all.
 
 ## One domain, three coordinators
 
@@ -101,8 +101,8 @@ real. It is just not the one that hurts most at three in the morning.
 Measure coupling by asking what has to change, and where, when a step is added.
 
 Add a fifth reaction to `order.placed`, say an analytics service, and the
-choreography chain costs the existing services nothing. `order-service` does not
-import a client, does not add a call, does not even learn the new service exists.
+choreography chain costs the existing services nothing. `order-service` doesn't
+import a client, doesn't add a call, doesn't even learn the new service exists.
 The new service pays the entire wiring cost by subscribing on its own, exactly as
 `notification-service` already does:
 
@@ -144,7 +144,7 @@ Choreography's failure handling is **per-hop idempotency, not compensation.**
 checking for an existing record before acting, which is what makes at-least-once
 Kafka delivery safe to build on. But nothing reacts to a *failed* payment by
 un-dispatching a shipment, and nothing refunds a capture when a shipment fails.
-There is no saga orchestrator and no dead-letter configuration. Kafka's consumer
+There's no saga orchestrator and no dead-letter configuration. Kafka's consumer
 redelivery is the only safety net wired up.
 
 Camel's failure handling here is **default propagation.** The route has no
@@ -158,7 +158,7 @@ The descriptor declares two tasks and nothing else, no retry policy and no
 compensation task. A 120-second timeout exists at the caller boundary, but that
 is HTTP hygiene, not workflow-level compensation.
 
-The fair comparison, then, is not "which engine handles failure better." All
+The fair comparison, then, isn't "which engine handles failure better." All
 three lean on idempotency or exception propagation today. The difference is
 **where the fix would go** when you need real compensation:
 
@@ -168,7 +168,7 @@ three lean on idempotency or exception propagation today. The difference is
 - In Flow, retry and compensation nodes added to the one workflow document. The
   Serverless Workflow spec supports them as first-class constructs, which is the
   one real edge of the declarative shape: compensation becomes expressible *as
-  data*. "The spec supports it" is not the same as "this workflow uses it," and
+  data*. "The spec supports it" isn't the same as "this workflow uses it," and
   keeping those two sentences apart is the difference between reading a demo and
   believing its marketing.
 
@@ -224,7 +224,7 @@ touches.
 
 ## The question worth carrying
 
-The split that survives contact with production is not declarative versus
+The split that survives contact with production isn't declarative versus
 imperative. Camel and Flow land in nearly the same place on coupling, on where
 the business logic lives, and on how much failure handling exists today. They
 differ in how you would extend each one: edit a method chain, or edit a task
@@ -276,7 +276,7 @@ from("direct:refund-payment")                     // the compensating action —
     .bean(paymentService, "refund");              // reads the paymentId saved via option()
 ```
 
-That is a real improvement over the default exception propagation in the
+That's a real improvement over the default exception propagation in the
 comparison above. But look at what it costs. A saga is a state machine: it moves
 through Active, Completing, and Completed on the happy path, or through
 Compensating and Compensated on failure, with a timeout that auto-compensates a
@@ -316,9 +316,9 @@ camelContext.addService(saga);
 The rest of the work follows from treating it as a state machine with external
 storage: give every step a compensation route, use `.option(...)` to persist the
 identifiers those compensations need, make each compensation idempotent because
-the coordinator may retry it, and set a `.timeout(...)` so a wedged saga does not
+the coordinator may retry it, and set a `.timeout(...)` so a wedged saga doesn't
 sit half-applied forever. Do that and the state lives outside the process again,
-and the service is stateless once more. It is the same externalize-your-state
+and the service is stateless once more. It's the same externalize-your-state
 move that keeps any service replaceable, applied to the one piece of coordination
 that does need to remember something.
 

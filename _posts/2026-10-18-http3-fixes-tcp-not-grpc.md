@@ -11,10 +11,10 @@ canonical_project:
 excerpt: "The moment someone hears HTTP/3 fixes TCP's head-of-line blocking, the next sentence is usually that gRPC gets faster. The first half is true and the second doesn't follow. QUIC fixes TCP's problems, and gRPC is defined over HTTP/2 specifically, so gRPC-over-HTTP/3 is a separate binding neither reference stack ships yet."
 ---
 
-Sit in enough architecture reviews and you will hear this pair of sentences
+Sit in enough architecture reviews and you'll hear this pair of sentences
 delivered as one thought: "HTTP/3 fixes TCP's head-of-line blocking, so once we
-move to it, gRPC gets faster." The first half is correct. The second does not
-follow, and teams that conflate them plan around a speedup that will not arrive.
+move to it, gRPC gets faster." The first half is correct. The second doesn't
+follow, and teams that conflate them plan around a speedup that won't arrive.
 QUIC fixes problems that belong to TCP. gRPC's performance characteristics belong
 to HTTP/2, a different layer, and "gRPC over HTTP/3" is a distinct piece of
 engineering that has to be specified and built on its own. As of early 2026,
@@ -34,7 +34,7 @@ many independent streams over one TCP connection, but TCP underneath has no idea
 those streams are independent. It sees one ordered byte sequence. Lose a single
 segment, and every stream sharing that connection stalls behind the
 retransmission, including the streams whose own bytes already arrived intact.
-This is head-of-line blocking, and it is a *transport-level* block: it has nothing
+This is head-of-line blocking, and it's a *transport-level* block: it has nothing
 to do with HTTP and everything to do with TCP's ordering promise.
 
 QUIC, the transport HTTP/3 runs on, moves to UDP and tracks each stream's
@@ -64,16 +64,16 @@ application protocol above it still has to be defined in terms of what the
 transport offers. And gRPC's wire format is defined in terms of HTTP/2
 specifically. It uses HTTP/2 trailers to carry the final status code, HTTP/2
 flow control for per-stream backpressure, and one HTTP/2 stream per RPC. Those
-are not incidental implementation details a library can swap under the hood; they
+aren't incidental implementation details a library can swap under the hood; they
 are the gRPC-over-HTTP/2 specification.
 
-So "gRPC over HTTP/3" is not a flag you flip on an existing HTTP/2 stack. It is a
+So "gRPC over HTTP/3" isn't a flag you flip on an existing HTTP/2 stack. It's a
 new transport binding that has to be specified and implemented separately, the
 same way gRPC-over-HTTP/2 had to be specified and implemented once. That binding
-does not exist natively in grpc-java or grpcio, the two implementations behind
+doesn't exist natively in grpc-java or grpcio, the two implementations behind
 every Quarkus and Python example in the source course. Neither project ships a
-QUIC-based transport a `GrpcService` or a `grpc.aio.server()` can bind to. This is
-not a quirk of two libraries; it reflects where the broader gRPC ecosystem sits
+QUIC-based transport a `GrpcService` or a `grpc.aio.server()` can bind to. This
+isn't a quirk of two libraries; it reflects where the broader gRPC ecosystem sits
 today.
 
 {% include excalidraw.html
@@ -81,7 +81,7 @@ today.
    alt="Three stacked tiers. Tier 1, native gRPC over HTTP/2, shows grpc-java on Quarkus and grpcio on Python both marked available, labeled the book's default and CI-gated every chapter, with an emphasis box noting every gRPC call in the book travels here. Tier 2, HTTP/3 as a transport not gRPC, shows Caddy with automatic HTTP/3 over TLS and an aioquic probe doing a QUIC handshake and h3 GET, both available, with an emphasis box noting it proves the transport runs but never makes a gRPC call. Tier 3, gRPC directly over HTTP/3, shows grpc-java and grpcio both marked as having no native h3 transport, with an emphasis box noting it is not available in either stack as of January 2026."
    caption="Three tiers, only two of them real today: native gRPC over HTTP/2 is the hard-gated default; HTTP/3 is demonstrable as a transport on its own; gRPC directly over HTTP/3 is a binding neither reference implementation ships yet." %}
 
-The consequence for a demo is that you cannot bolt HTTP/3 onto a gRPC
+The consequence for a demo is that you can't bolt HTTP/3 onto a gRPC
 server and point at the result. The course's Chapter 24 example respects that by
 keeping the two transports in entirely separate services. Two lean servers answer
 one RPC over native gRPC on HTTP/2, the only transport either stack has. A third,
@@ -135,7 +135,7 @@ async def probe(host: str, port: int, path: str, timeout: float) -> int:
     # ...
 ```
 
-When it runs, it reports what it did and names what it did not do:
+When it runs, it reports what it did and names what it didn't do:
 
 ```
 h3_probe: QUIC handshake_completed=True alpn=h3 status=200
@@ -149,10 +149,10 @@ capability-gated: it retries a few times to absorb Caddy's cold start, and if it
 still can't complete, it logs a clear `SKIP` with a documented fallback and lets
 the build continue. Whether a sandbox routes UDP between two containers is a
 property of the environment, not of the code, so wiring a build failure to it
-would signal a code defect that is not there.
+would signal a code defect that isn't there.
 
 Meanwhile the gRPC call the course measures runs over HTTP/2 on both stacks, and
-it is fast without any of this:
+it's fast without any of this:
 
 ```
 Quarkus:  rps=1888.10  p99=12.58ms  errors=0
@@ -188,12 +188,12 @@ three mature answers. Each optimizes for a different caller.
   contract generated into real client and server code, all four RPC shapes
   including bidirectional streaming, and end-to-end flow control where a slow
   consumer throttles the producer on its own stream. The cost is reach. A browser
-  cannot speak native gRPC, and anyone debugging without the `.proto` in hand is
+  can't speak native gRPC, and anyone debugging without the `.proto` in hand is
   working blind.
 - **REST over HTTP/2**, meaning server-sent events or chunked transfer over a
   conventional REST API, trades the typed contract for universal reach. Any
   browser's `fetch` or `EventSource` consumes it with zero extra tooling and any
-  engineer with `curl` can watch it live. What it does not give you is a second
+  engineer with `curl` can watch it live. What it doesn't give you is a second
   direction; SSE and chunked responses are server-to-client only, and
   backpressure is yours to build.
 - **WebSockets** go the other way: full-duplex, free-form messages, native in
@@ -217,12 +217,12 @@ a throughput number almost never settles it.
 
 ## What to carry into the next planning meeting
 
-Do not let an HTTP/3 timeline move a transport decision. HTTP/2 is the gRPC
+Don't let an HTTP/3 timeline move a transport decision. HTTP/2 is the gRPC
 transport everywhere today, on every mainstream stack, and that stays true until
 grpc-java and grpcio (or whichever implementation you depend on) ship a native
-QUIC binding. When that lands it is worth revisiting, not before. QUIC's fix for
+QUIC binding. When that lands it's worth revisiting, not before. QUIC's fix for
 head-of-line blocking accrues to HTTP/3 and to protocols built directly on QUIC;
-it does not reach a protocol defined over HTTP/2. Keep the layer where the fix
+it doesn't reach a protocol defined over HTTP/2. Keep the layer where the fix
 lives separate from the layer where your protocol lives, and the two questions
 stop collapsing into one wrong answer.
 
