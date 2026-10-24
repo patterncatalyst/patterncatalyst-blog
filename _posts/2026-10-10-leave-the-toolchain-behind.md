@@ -8,7 +8,7 @@ canonical_project:
   name: "Optimizing Modern C++ with Containers"
   repo: "patterncatalyst/cpp-container-optimization-tutorial"
   url: "https://patterncatalyst.github.io/cpp-container-optimization-tutorial/"
-excerpt: "A 4 MB C++ binary routinely ships inside a 689 MB image. The fix isn't to shrink the toolchain, it's to leave it behind. Multi-stage builds plus the right UBI runtime tier get the same service down to 26 MB, and the tier you pick is an incident-response decision."
+excerpt: "A 4 MB C++ binary routinely ships inside a 689 MB image. The fix leaves the toolchain behind instead of shrinking it. Multi-stage builds plus the right UBI runtime tier get the same service down to 26 MB, and the tier you pick is an incident-response decision."
 ---
 
 A C++ service compiles to a 4 MB binary and ships inside a 689 MB image. The
@@ -18,9 +18,9 @@ cache, a pile of object files, and the source tree, none of which the running
 program ever touches.
 
 The instinct is to go hunting for a smaller base image or a leaner compiler
-install. That is the wrong lever. The toolchain is not bloat to be trimmed; it
-is build-time machinery that has no business being in the runtime image at all.
-The fix is to leave it behind.
+install. That's the wrong lever. The toolchain is build-time machinery that
+has no business being in the runtime image at all. The fix is to leave it
+behind.
 
 ## What the 685 MB is doing
 
@@ -36,7 +36,7 @@ produces this:
 | Source tree | ~5 MB | needed to be compiled, not executed |
 
 Every one of those lines is present only because the build happened in the image
-you shipped. None of it is a dependency of the program. The compiler does not
+you shipped. None of it is a dependency of the program. The compiler doesn't
 run in production. The Conan cache resolved your dependencies months ago. The
 `.o` files were consumed by the linker and never read again.
 
@@ -96,7 +96,7 @@ changes is what ships. On `ubi-minimal` this gets the demo from 689 MB to about
 ## Picking the runtime base is an incident-response decision
 
 Red Hat's Universal Base Image ships in three runtime tiers, and the gap between
-them is not about megabytes:
+them isn't about megabytes:
 
 | Tier | Size | Shell | Package manager | Pick it for |
 |---|---|---|---|---|
@@ -104,7 +104,7 @@ them is not about megabytes:
 | `ubi10/ubi-minimal` | ~100 MB | `bash` | `microdnf` | most production C++ services |
 | `ubi10/ubi-micro` | ~14 MB | none | none | security-sensitive, measured deployments |
 
-It is tempting to read that table top to bottom and reach for the smallest row.
+It's tempting to read that table top to bottom and reach for the smallest row.
 Resist that. The real question is what your on-call playbook does when the
 service misbehaves at 3 a.m.
 
@@ -112,9 +112,9 @@ service misbehaves at 3 a.m.
 bash` drops you into a live container and you can install `ldd` or poke around.
 That convenience costs roughly 85 MB over `ubi-micro`.
 
-`ubi-micro` is about 14 MB before your binary lands. There is no shell, no
-`dnf`, no `ldd`, no `strace`. You cannot `exec` a `bash` into it because there
-is no `bash` to exec. If your binary needs `libssl` or `libstdc++`, you either
+`ubi-micro` is about 14 MB before your binary lands. There's no shell, no
+`dnf`, no `ldd`, no `strace`. You can't `exec` a `bash` into it because there's
+no `bash` to exec. If your binary needs `libssl` or `libstdc++`, you either
 link them statically or `COPY` them explicitly from the build stage. The
 tutorial's `ubi-micro` variant goes fully static and lands at **26.4 MB**:
 
@@ -138,9 +138,9 @@ the 26 MB image safe to operate rather than merely small.
 ## A 26 MB image is opaque, so write down what's inside it
 
 Shrinking the image removes your ability to interrogate it. On `ubi-micro` you
-cannot run `dnf list installed`, you cannot `ldd` the binary, you cannot ask the
+can't run `dnf list installed`, you can't `ldd` the binary, you can't ask the
 image what it was built against. Six months from now a CVE drops against a range
-of `libstdc++` versions and nobody can tell from the image whether you are
+of `libstdc++` versions and nobody can tell from the image whether you're
 affected.
 
 The answer is to write the toolchain identity into the image metadata at build
@@ -164,13 +164,13 @@ too small to hold the toolchain, so it holds the toolchain's name tag instead.
 ## The trap that makes this a C++ problem
 
 A Go binary carries its runtime inside itself; an Uberjar carries the JVM's
-class libraries. C++ does not work that way. A typical C++ binary depends on a
-specific `libstdc++.so.6` and a specific `libc.so.6`, and those dependencies are
-implicit right up until they are fatal.
+class libraries. C++ doesn't work that way. A typical C++ binary depends on a
+specific `libstdc++.so.6` and a specific `libc.so.6`, and those dependencies stay
+implicit right up until they're fatal.
 
 The fatal version looks like this. Build the service on one distro's glibc and
 run it on an older one, and the dynamic linker goes looking at startup for a
-symbol version the runtime's `libc.so.6` does not carry:
+symbol version the runtime's `libc.so.6` doesn't carry:
 
 ```
 /app/demo-svc: /lib64/libc.so.6: version `GLIBC_2.41' not found (required by /app/demo-svc)
@@ -187,7 +187,7 @@ use the same UBI release for both stages so the build glibc and the runtime
 glibc are identical by construction. UBI-10-on-UBI-10 sidesteps the whole class
 of failure without any static linking at all.
 
-That is the same shape as the micro-architecture pitfall, where a binary built
+That's the same shape as the micro-architecture pitfall, where a binary built
 with `-march=native` on an AVX-512 host crashes with `SIGILL` on an older
 runtime CPU. In both cases the build environment and the runtime environment
 disagree, and the image strategy is what makes that disagreement visible or
@@ -195,13 +195,12 @@ invisible.
 
 ## The takeaway
 
-Image size for a C++ service is not a packaging afterthought. It is a decision
-about which dynamic libraries travel with the binary, which ones you assume at
-the runtime end, and how you will diagnose the thing once it is small enough to
-be opaque. Multi-stage builds leave the toolchain behind. The UBI tier you pick
-encodes your incident-response posture. Labels buy back the introspection the
-small image gave up. Get those three right and the same 4 MB binary that was
-shipping in 689 MB ships in 26.
+Image size for a C++ service is a decision: which dynamic libraries travel with
+the binary, which ones you assume at the runtime end, and how you'll diagnose
+the thing once it's small enough to be opaque. Multi-stage builds leave the
+toolchain behind. The UBI tier you pick encodes your incident-response posture.
+Labels buy back the introspection the small image gave up. Get those three
+right and the same 4 MB binary that was shipping in 689 MB ships in 26.
 
 ## Source project
 

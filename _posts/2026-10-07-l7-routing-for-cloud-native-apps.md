@@ -267,7 +267,7 @@ spec:
 ```
 
 That last block is a canary release of a backend service no external client knows exists,
-which you cannot do through an edge load balancer.
+which you can't do through an edge load balancer.
 
 gRPC east/west has a few sharp edges. Route on the gRPC URI prefix for per-method canaries.
 Prefer least-request load balancing over round-robin, because gRPC connections are long-lived
@@ -278,10 +278,11 @@ trailer: a `200` with a non-OK gRPC status is a failure, and a check that ignore
 call a failing service healthy.
 
 <!--
-  Additional figures from the source appendix — the L7 journey, sticky-session
-  affinity modes, the six traffic-steering shapes, and east/west sidecar
-  mechanics — are available as paired SVG + .excalidraw assets in the source
-  project if this post grows into a series. Pattern for adding one here:
+  Additional figures from the source appendix (the four-layer request flow,
+  sticky-session affinity modes, the six traffic-steering shapes, and
+  east/west sidecar mechanics) are available as paired SVG + .excalidraw
+  assets in the source project if this post grows into a series. Pattern for
+  adding one here:
 
   {% include excalidraw.html
      file="<name>"
