@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 430" font-family="'Red Hat Text', system-ui, sans-serif" role="img">
+<defs><marker id="a" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker><marker id="am" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b8650a"/></marker></defs>
+<rect x="20" y="70" width="560" height="330" rx="12" fill="#fafafa" stroke="#ddd"/>
+<text x="32" y="90" font-size="12" font-weight="700" fill="#888">latency report  —  consumer, 10,000 parcels @ 1000/s</text>
+<rect x="50" y="120" width="230" height="230" rx="9" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+<text x="165.0" y="188.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Reported latency</text>
+<text x="165.0" y="205.0" font-size="11.5" fill="#555555" text-anchor="middle">(percentiles only)</text>
+<text x="165.0" y="220.0" font-size="11.5" fill="#555555" text-anchor="middle"></text>
+<text x="165.0" y="235.0" font-size="11.5" fill="#555555" text-anchor="middle">p50     0.78 ms</text>
+<text x="165.0" y="250.0" font-size="11.5" fill="#555555" text-anchor="middle">p99     4.35 ms</text>
+<text x="165.0" y="265.0" font-size="11.5" fill="#555555" text-anchor="middle">p99.9   8.5 ms</text>
+<text x="165.0" y="280.0" font-size="11.5" fill="#555555" text-anchor="middle"></text>
+<text x="165.0" y="295.0" font-size="11.5" fill="#555555" text-anchor="middle">no mean here</text>
+<rect x="320" y="120" width="230" height="230" rx="9" fill="#fff8ef" stroke="#e8870c" stroke-width="2"/>
+<text x="435.0" y="188.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">model block</text>
+<text x="435.0" y="205.0" font-size="11.5" fill="#555555" text-anchor="middle">(the only mean)</text>
+<text x="435.0" y="220.0" font-size="11.5" fill="#555555" text-anchor="middle"></text>
+<text x="435.0" y="235.0" font-size="11.5" fill="#555555" text-anchor="middle">W-bar   1.05 ms</text>
+<text x="435.0" y="250.0" font-size="11.5" fill="#555555" text-anchor="middle">lambda  1000 /s</text>
+<text x="435.0" y="265.0" font-size="11.5" fill="#555555" text-anchor="middle"></text>
+<text x="435.0" y="280.0" font-size="11.5" fill="#555555" text-anchor="middle">a labelled</text>
+<text x="435.0" y="295.0" font-size="11.5" fill="#555555" text-anchor="middle">modelling input</text>
+<rect x="650" y="120" width="240" height="70" rx="9" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+<text x="770.0" y="153.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Little&#x27;s Law</text>
+<text x="770.0" y="170.0" font-size="11.5" fill="#555555" text-anchor="middle">L = lambda x W-bar</text>
+<rect x="650" y="240" width="240" height="110" rx="9" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+<text x="770.0" y="285.5" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">predicted L   1.05</text>
+<text x="770.0" y="302.5" font-size="11.5" fill="#555555" text-anchor="middle">sampled L     1.05</text>
+<text x="770.0" y="317.5" font-size="11.5" fill="#555555" text-anchor="middle">error         +0.5 %</text>
+<path d="M550,170 L650,155" fill="none" stroke="#b8650a" stroke-width="2" marker-end="url(#am)"/>
+<text x="606.0" y="156.5" font-size="11" fill="#ffffff" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">W-bar in</text>
+<text x="606.0" y="156.5" font-size="11" fill="#b8650a" text-anchor="middle">W-bar in</text>
+<path d="M770,190 L770,240" fill="none" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+<text x="776.0" y="209.0" font-size="11" fill="#ffffff" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">predict</text>
+<text x="776.0" y="209.0" font-size="11" fill="#555" text-anchor="middle">predict</text>
+<text x="460" y="44" font-size="11" fill="#888" text-anchor="middle" font-weight="700">A mean is never a latency. It appears once, labelled, as a model input.</text>
+</svg>
