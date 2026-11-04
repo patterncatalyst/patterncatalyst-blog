@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" font-family="'Red Hat Text', system-ui, sans-serif" role="img">
+<defs><marker id="a" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker><marker id="am" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b8650a"/></marker></defs>
+<rect x="40" y="66" width="210" height="64" rx="9" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+<text x="145.0" y="96.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Monolith (WSGI)</text>
+<text x="145.0" y="113.0" font-size="11.5" fill="#555555" text-anchor="middle">golden baseline</text>
+<rect x="40" y="248" width="210" height="64" rx="9" fill="#fff8ef" stroke="#e8870c" stroke-width="2"/>
+<text x="145.0" y="278.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Review service</text>
+<text x="145.0" y="295.0" font-size="11.5" fill="#555555" text-anchor="middle">FastAPI candidate</text>
+<rect x="345" y="138" width="240" height="96" rx="9" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+<text x="465.0" y="176.5" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Behavior-equivalence suite</text>
+<text x="465.0" y="193.5" font-size="11.5" fill="#555555" text-anchor="middle">real socket, both flag states</text>
+<text x="465.0" y="208.5" font-size="11.5" fill="#555555" text-anchor="middle">plus a negative check</text>
+<rect x="675" y="66" width="205" height="64" rx="9" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+<text x="777.5" y="96.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Match: sign off</text>
+<text x="777.5" y="113.0" font-size="11.5" fill="#555555" text-anchor="middle">flip the flag</text>
+<rect x="675" y="248" width="205" height="64" rx="9" fill="#ffffff" stroke="#999999" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="777.5" y="278.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">In-process mock</text>
+<text x="777.5" y="295.0" font-size="11.5" fill="#555555" text-anchor="middle">misses the chunked-body bug</text>
+<path d="M250,98 L345,170" fill="none" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+<path d="M250,280 L345,202" fill="none" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+<path d="M585,170 L675,98" fill="none" stroke="#b8650a" stroke-width="2" marker-end="url(#am)"/>
+<path d="M585,202 L675,280" fill="none" stroke="#555" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#a)"/>
+<text x="636.0" y="235.0" font-size="11" fill="#ffffff" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">what a socket catches</text>
+<text x="636.0" y="235.0" font-size="11" fill="#555" text-anchor="middle">what a socket catches</text>
+<text x="450" y="26" font-size="15" fill="#888" text-anchor="middle" font-weight="700">A real socket proves what a mock cannot</text>
+</svg>

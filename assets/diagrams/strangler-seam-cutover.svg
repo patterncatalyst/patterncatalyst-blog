@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" font-family="'Red Hat Text', system-ui, sans-serif" role="img">
+<defs><marker id="a" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker><marker id="am" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b8650a"/></marker></defs>
+<rect x="40" y="140" width="160" height="72" rx="9" fill="#eef4fb" stroke="#2f6db5" stroke-width="2"/>
+<text x="120.0" y="174.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Client</text>
+<text x="120.0" y="191.0" font-size="11.5" fill="#555555" text-anchor="middle">/api/reviews</text>
+<rect x="280" y="140" width="200" height="72" rx="9" fill="#fff8ef" stroke="#e8870c" stroke-width="2"/>
+<text x="380.0" y="174.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Strangler proxy</text>
+<text x="380.0" y="191.0" font-size="11.5" fill="#555555" text-anchor="middle">route by flag</text>
+<rect x="560" y="48" width="300" height="66" rx="9" fill="#ffffff" stroke="#999999" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="710.0" y="79.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Monolith review module</text>
+<text x="710.0" y="96.0" font-size="11.5" fill="#555555" text-anchor="middle">flag OFF, being retired</text>
+<rect x="560" y="238" width="300" height="66" rx="9" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+<text x="710.0" y="269.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Review service (FastAPI)</text>
+<text x="710.0" y="286.0" font-size="11.5" fill="#555555" text-anchor="middle">flag ON, once the gate is green</text>
+<path d="M200,176 L280,176" fill="none" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+<path d="M480,162 L560,81" fill="none" stroke="#555" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#a)"/>
+<text x="526.0" y="115.5" font-size="11" fill="#ffffff" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">flag OFF</text>
+<text x="526.0" y="115.5" font-size="11" fill="#555" text-anchor="middle">flag OFF</text>
+<path d="M480,190 L560,271" fill="none" stroke="#b8650a" stroke-width="2" marker-end="url(#am)"/>
+<text x="526.0" y="224.5" font-size="11" fill="#ffffff" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">flag ON</text>
+<text x="526.0" y="224.5" font-size="11" fill="#b8650a" text-anchor="middle">flag ON</text>
+<text x="450" y="26" font-size="15" fill="#888" text-anchor="middle" font-weight="700">One path prefix, two backends, one reversible flag</text>
+<text x="710" y="332" font-size="11" fill="#64748b" text-anchor="middle">flipping back only changes config, no redeploy</text>
+</svg>
