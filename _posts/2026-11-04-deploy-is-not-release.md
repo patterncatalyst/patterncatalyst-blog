@@ -11,7 +11,7 @@ canonical_project:
 excerpt: "Deploying an artifact and releasing a feature are different events, and a flag is what splits them. In a Quarkus + Camel route that means the route ships once, dark, and the rollout, the A/B test, and the targeted enablement are all flag flips evaluated per message, with no redeploy on either the release or the rollback."
 ---
 
-The reframe that makes progressive delivery work is short: deploying an artifact
+Progressive delivery rests on one reframe: deploying an artifact
 and releasing a feature are different events. The
 [Cloud-Native Design Patterns](https://patterncatalyst.github.io/cloud-native-design-patterns/docs/27-appendix-n-feature-flags/) treatment of feature flags
 puts it this way: once the code is in production, a flag decides per message
@@ -19,7 +19,7 @@ whether the new path is taken, so you deploy continuously and dark, then release
 gradually and reversibly, with no redeploy on the critical path of either the
 rollout or the rollback.
 
-For a Camel route that principle has teeth. The route ships once, with every
+A Camel route applies that directly. The route ships once, with every
 variant of its behavior compiled in and turned off. After that, rolling a new
 enrichment step out to 10% of traffic, A/B testing two routing algorithms, or
 enabling a compliance change for enterprise customers only are all the same kind
