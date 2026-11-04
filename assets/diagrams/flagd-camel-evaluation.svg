@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 300" font-family="'Red Hat Text', system-ui, sans-serif" role="img">
+<defs><marker id="a" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker><marker id="am" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b8650a"/></marker></defs>
+<rect x="20" y="128" width="140" height="58" rx="9" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+<text x="90.0" y="155.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Kafka</text>
+<text x="90.0" y="172.0" font-size="11.5" fill="#555555" text-anchor="middle">order placed</text>
+<rect x="200" y="118" width="180" height="80" rx="9" fill="#fff8ef" stroke="#e8870c" stroke-width="2"/>
+<text x="290.0" y="156.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">Camel route</text>
+<text x="290.0" y="173.0" font-size="11.5" fill="#555555" text-anchor="middle">toD by variant</text>
+<rect x="430" y="124" width="170" height="66" rx="9" fill="#ffffff" stroke="#111111" stroke-width="2"/>
+<text x="515.0" y="155.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">featureFlags bean</text>
+<text x="515.0" y="172.0" font-size="11.5" fill="#555555" text-anchor="middle">OpenFeature client</text>
+<rect x="670" y="36" width="165" height="62" rx="9" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+<text x="752.5" y="65.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">flagd daemon</text>
+<text x="752.5" y="82.0" font-size="11.5" fill="#555555" text-anchor="middle">reads flags.json</text>
+<rect x="670" y="210" width="165" height="58" rx="9" fill="#ffffff" stroke="#999999" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="752.5" y="237.0" font-size="13.5" font-weight="700" fill="#111111" text-anchor="middle">default value</text>
+<text x="752.5" y="254.0" font-size="11.5" fill="#555555" text-anchor="middle">flagd unreachable</text>
+<path d="M160,157 L200,157" fill="none" stroke="#555" stroke-width="2" marker-end="url(#a)"/>
+<path d="M380,157 L430,157" fill="none" stroke="#555" stroke-width="2" marker-start="url(#a)" marker-end="url(#a)"/>
+<path d="M600,150 L670,78" fill="none" stroke="#b8650a" stroke-width="2" marker-end="url(#am)"/>
+<text x="641.0" y="108.0" font-size="11" fill="#ffffff" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">evaluate</text>
+<text x="641.0" y="108.0" font-size="11" fill="#b8650a" text-anchor="middle">evaluate</text>
+<path d="M600,164 L670,236" fill="none" stroke="#555" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#a)"/>
+<text x="641.0" y="194.0" font-size="11" fill="#ffffff" stroke="#ffffff" stroke-width="3" paint-order="stroke" text-anchor="middle">fallback</text>
+<text x="641.0" y="194.0" font-size="11" fill="#555" text-anchor="middle">fallback</text>
+<text x="300" y="110" font-size="11" fill="#555555" text-anchor="middle">lookup / result</text>
+<text x="430" y="24" font-size="15" fill="#888" text-anchor="middle" font-weight="700">A flag lookup per message, with a default that cannot fail</text>
+<text x="430" y="292" font-size="11" fill="#64748b" text-anchor="middle">if flagd is down the route keeps its old behavior</text>
+</svg>
